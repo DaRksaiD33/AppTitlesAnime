@@ -36,10 +36,11 @@
             btnShowTypes.AutoSize = true;
             btnShowTypes.Location = new Point(25, 42);
             btnShowTypes.Name = "btnShowTypes";
-            btnShowTypes.Size = new Size(253, 35);
+            btnShowTypes.Size = new Size(313, 35);
             btnShowTypes.TabIndex = 0;
-            btnShowTypes.Text = "Справочник \"Типы аниме\"";
+            btnShowTypes.Text = "Отобразить список \"Типы аниме\"";
             btnShowTypes.UseVisualStyleBackColor = true;
+            btnShowTypes.Click += BtnShowTypes_Click_1;
             // 
             // FormMain
             // 
@@ -49,7 +50,7 @@
             ClientSize = new Size(808, 511);
             Controls.Add(btnShowTypes);
             Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            Margin = new Padding(5, 5, 5, 5);
+            Margin = new Padding(5);
             Name = "FormMain";
             Text = "Главная форма";
             ResumeLayout(false);

@@ -16,5 +16,16 @@ namespace AppTitlesAnime
         {
             InitializeComponent();
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void BtnAddType_Click(object sender, EventArgs e)
+        {
+            FormAddType formAddType = new FormAddType();
+            formAddType.ShowDialog();
+        }
     }
 }
