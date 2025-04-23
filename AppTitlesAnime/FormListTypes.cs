@@ -32,7 +32,7 @@ namespace AppTitlesAnime
             dataGridViewTypes.Columns["Id"].Visible = false;
             dataGridViewTypes.Columns["AnimeTitles"].Visible = false;
 
-            dataGridViewTypes.Columns["TypeName"].HeaderText="Тип аниме";
+            dataGridViewTypes.Columns["TypeName"].HeaderText = "Тип аниме";
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -55,8 +55,8 @@ namespace AppTitlesAnime
         {
             FormAddType formAddType = new();
             DialogResult result = formAddType.ShowDialog();
-        
-            if (result == DialogResult.Cancel) 
+
+            if (result == DialogResult.Cancel)
                 return;
 
             Type type = new Type();
@@ -68,6 +68,36 @@ namespace AppTitlesAnime
             MessageBox.Show("Новый обьект добавлен");
 
 
+            this.dataGridViewTypes.DataSource = this.db.Types.Local.OrderBy(o => o.TypeName).ToList();
+        }
+
+        private void BtnUpdateType_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewTypes.SelectedRows.Count == 0)
+                return;
+
+            int index = dataGridViewTypes.SelectedRows[0].Index;
+            short id = 0;
+            bool converted = Int16.TryParse(dataGridViewTypes[0, index].Value.ToString(), out id);
+
+            if (!converted)
+                return; 
+
+            Type type=db.Types.Find(id);
+            FormAddType formAddType = new();
+            formAddType.textBoxTypeName.Text = type.TypeName;
+
+            DialogResult result = formAddType.ShowDialog(this); 
+
+            if (result == DialogResult.Cancel) 
+                return;
+
+
+            type.TypeName=formAddType.textBoxTypeName.Text;
+            db.Types.Update(type);
+            db.SaveChanges() ;
+
+            MessageBox.Show("обьект изменен");
             this.dataGridViewTypes.DataSource = this.db.Types.Local.OrderBy(o => o.TypeName).ToList();
         }
     }
