@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AppTitlesAnime.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,15 +9,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AppContext = AppTitlesAnime.Models.AppContext;
 
 namespace AppTitlesAnime
 {
     public partial class FormListTypes : Form
     {
+        private AppContext db;
+
         public FormListTypes()
         {
             InitializeComponent();
         }
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            this.db = new AppContext();
+            this.db.Types.Load();
+            this.dataGridViewTypes.DataSource = this.db.Types.Local.OrderBy(o => o.TypeName).ToList();
+
+            dataGridViewTypes.Columns["Id"].Visible = false;
+            dataGridViewTypes.Columns["AnimeTitles"].Visible = false;
+
+            dataGridViewTypes.Columns["TypeName"].HeaderText="Тип аниме";
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+
+            this.db?.Dispose();
+            this.db = null;
+
+        }
+
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
